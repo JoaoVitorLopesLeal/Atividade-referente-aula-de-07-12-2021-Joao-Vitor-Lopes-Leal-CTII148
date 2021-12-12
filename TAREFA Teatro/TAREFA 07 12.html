@@ -1,0 +1,81 @@
+<html>
+    <head>
+        <title>Atividade referente à aula de 07/12/2021</title>
+        <script lang="javascript">
+            var estado,lin,col, AssentosLivres, porcentagemAssentosLivres;
+            estado = new Array (15);
+            AssentosLivres = 600;
+
+            for(col = 0; col < estado.length; col++)
+            {
+                estado[col] = new Array(40);
+                for(lin = 0; lin <= 40; lin++)
+                {
+                    estado[col][lin] = true;
+                }
+            }
+
+            function clicou(lin, col)
+            {
+                
+                if(estado[lin-1][col-1])
+                {
+                    estado[lin-1][col-1] = false;
+                    document.getElementById("assento"+lin+"-"+col).setAttribute("src","AssentoOcupado.png");
+                    document.getElementById("assento"+lin+"-"+col).setAttribute("alt","Ocupado");
+                    AssentosLivres -= 1;
+                }
+                else
+                {
+                    estado[lin-1][col-1] = true;
+                    document.getElementById("assento"+lin+"-"+col).setAttribute("src","AssentoLivre.png");
+                    document.getElementById("assento"+lin+"-"+col).setAttribute("alt","Livre");
+                    AssentosLivres += 1;
+                }
+            }
+
+            function Calcular()
+            {
+                porcentagemAssentosLivres = Math.round((AssentosLivres/600)*100);
+        
+                document.frm.Saida1.value = "Assentos livres: "+AssentosLivres;
+                document.frm.Saida2.value = "Assentos ocupados: "+(600-AssentosLivres);
+                document.frm.Saida3.value = "Espaço disponivel: "+porcentagemAssentosLivres+"%";
+            }
+        </script>
+    </head>
+    <body>
+        <form name="frm">
+            <script lang="javascript">
+                var lin, col, telaLin, telaCol;
+                for(telaLin = 1; telaLin <= 3; telaLin++)
+                {
+                    for(telaCol = 1; telaCol <= 40; telaCol++)
+                    {
+                        document.write("<img width='33' height='35' id='"+telaLin+"-"+telaCol+"' scr='Tela.jpg'>");
+                        document.getElementById(telaLin+"-"+telaCol).setAttribute("src","Tela.jpg");
+                    }
+                    document.write("<br>")
+                }
+                document.write("<br>")
+                for(lin = 1; lin <= 15; lin++)
+                {
+                    for(col = 1; col <= 40; col++)
+                    {
+                        document.write("<img width='33' height='35' id='assento"+lin+"-"+col+"'  alt='"+lin+"-"+col+"' scr='AssentoLivre.png' onclick='clicou("+lin+","+col+");'>");
+                        document.getElementById("assento"+lin+"-"+col).setAttribute("src","AssentoLivre.png");
+                    }
+                    document.write("<br>")
+                }
+            </script>
+            <p></p>
+            <input type="button" value="Ocupação" onclick="Calcular();"><br>
+            <input type="text" name="Saida1"  size="50"  readonly><br>
+            <input type="text" name="Saida2"  size="50"  readonly><br>
+            <input type="text" name="Saida3"  size="50" readonly>
+            <p id="Saida1"></p>
+            <p id="Saida2"></p>
+            
+        </form>         
+    </body>
+</html>
